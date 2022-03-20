@@ -6,7 +6,7 @@ const Job = require("../models/jobModel");
 //@route GET /api/jobs
 //@access Private
 const getJobs = asyncHandler(async (req, res) => {
-  const jobs = await Job.find();
+  const jobs = await Job.find({ user: req.user.id });
 
   res.status(200).json(jobs);
 });
@@ -22,7 +22,7 @@ const setJob = asyncHandler(async (req, res) => {
 
   const job = await Job.create({
     text: req.body.text,
-    title: req.body.title,
+    user: req.user.id,
   });
 
   res.status(200).json(job);
@@ -38,6 +38,21 @@ const updateJob = asyncHandler(async (req, res) => {
   if (!job) {
     res.status(400);
     throw new Error("Job not found");
+  }
+
+  const user = await User.findById(req.user.id)
+ 
+  //Check for user
+  if(!user) {
+      res.status(401)
+      throw new Error('User not found')
+  }
+
+
+  //Make sure the logged in user matches the job user
+  if(job.user.toString() !== user.id) {
+      res.status(401)
+      throw new Error('User not authorized')
   }
 
   const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, {
@@ -58,6 +73,22 @@ const deleteJob = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Job not found");
   }
+
+  const user = await User.findById(req.user.id)
+ 
+  //Check for user
+  if(!user) {
+      res.status(401)
+      throw new Error('User not found')
+  }
+
+
+  //Make sure the logged in user matches the job user
+  if(job.user.toString() !== user.id) {
+      res.status(401)
+      throw new Error('User not authorized')
+  }
+
 
   await job.remove();
 
