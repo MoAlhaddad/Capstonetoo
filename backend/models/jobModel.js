@@ -8,7 +8,7 @@ const jobSchema = mongoose.Schema(
       ref: "User",
     },
 
-    text: { type: String, required: [true, "Please add a job title"] },
+    title: { type: String, required: [true, "Please add a job title"] },
     country: { type: String, required: true },
     minSalary: { type: Number, required: true },
     maxSalary: { type: Number, required: true },

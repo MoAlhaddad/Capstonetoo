@@ -1,4 +1,6 @@
 const asyncHandler = require("express-async-handler");
+const axios = require('axios');
+const config = require('../config');
 
 const Job = require("../models/jobModel");
 
@@ -6,9 +8,12 @@ const Job = require("../models/jobModel");
 //@route GET /api/jobs
 //@access Private
 const getJobs = asyncHandler(async (req, res) => {
-  const jobs = await Job.find({ user: req.user.id });
+  console.log("CONFIG:", config);
+  const jobs = await axios.get(`
+      https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=${config.APP_ID}&app_key=${config.API_KEY}
+  `);
 
-  res.status(200).json(jobs);
+  return res.status(200).json({jobs: jobs.data.results});
 });
 
 // @desc Set Jobs
@@ -21,11 +26,29 @@ const setJob = asyncHandler(async (req, res) => {
   }
 
   const job = await Job.create({
-    text: req.body.text,
+    text: req.body.title,
+    job_title: req.body.job_title,
+    company: req.body.company,
+    country: req.body.country,
+    department: req.body.department,
+    salaryFrom: req.body.salaryFrom,
+    salaryTo: req.body.salaryTo,
+    minSalary: req.body.salaryFrom,
+    maxSalary: req.body.salaryTo,
+    experience: req.body.experience,
+    skillsRequired: req.body.skillsRequired,
+    minimumQualification: req.body.minimumQualification,
+    smallDescription: req.body.smallDescription,
+    fullDescription: req.body.fullDescription,
+    Description: req.body.fullDescription,
+    email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
+    companyDescription: req.body.companyDescription,
+    postedBy: req.user.id,
     user: req.user.id,
   });
-
-  res.status(200).json(job);
+  console.log("JOB:", job);
+  return res.status(200).json({job});
 });
 
 // @desc Update Jobs
