@@ -11,9 +11,10 @@ function Dashboard() {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
-  const {user} = useSelector((state) => state.auth)
-  const {jobs, isLoading, isError, message} = useSelector((state) => state.jobs)
+  console.log(useSelector((state) => state))
+  const { user } = useSelector((state) => state.auth)
+  const { jobs, isLoading, isError, message} = useSelector((state) => state.job)
+  
 
   useEffect(() => {
      if(isError) {
