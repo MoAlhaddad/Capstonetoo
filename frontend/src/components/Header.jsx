@@ -1,4 +1,4 @@
-import {FaSignInAlt, FaSignOutAlt, FaUser} from 'react-icons/fa'
+import {FaSignInAlt, FaSignOutAlt, FaUser, FaTachometerAlt, FaSearch } from 'react-icons/fa'
 import {Link, useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {logout, reset} from '../features/auth/authSlice'
@@ -21,12 +21,24 @@ function Header() {
         <Link to='/'>JobFinder</Link>
     </div>
     <ul>
+        <li>
+          <Link to='/search'>
+            <FaSearch /> Search
+          </Link>
+        </li>
         {user ? (
-          <li>
-            <button className='btn' onClick={onLogout}>
-              <FaSignOutAlt /> Logout
-            </button>
-          </li>
+          <>
+            <li>
+              <Link to='/dashboard'>
+                <FaTachometerAlt /> Dashboard
+              </Link>
+            </li>
+            <li>
+              <button className='btn' onClick={onLogout}>
+                <FaSignOutAlt /> Logout
+              </button>
+            </li>
+          </>
         ) : (
           <>
             <li>

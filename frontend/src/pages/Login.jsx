@@ -15,7 +15,6 @@ function Login() {
       
    })
 
-   const {email, password } = formData
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
@@ -36,20 +35,16 @@ function Login() {
 }, [user, isError, isSuccess, message, navigate, dispatch])
 
    const onChange = (e) => {
-       setFormData((prevState) => ({
-           ...prevState,
+       setFormData({
+           ...formData,
            [e.target.name]: e.target.value,
 
-       }))
+       })
    }
    const onSubmit = (e) => {
        e.preventDefault()
 
-       const userData = {
-           email, password
-       }
-
-       dispatch(login(userData))
+       dispatch(login(formData))
    }
    if(isLoading) {
        return <Spinner/>
@@ -70,7 +65,7 @@ function Login() {
             <input type="email" className="form-control" 
              id="email" 
              name="email" 
-             value={email} 
+             value={formData.email} 
              placeholder='Enter your Email' 
              onChange={onChange}/>
             </div>
@@ -78,7 +73,7 @@ function Login() {
             <input type="password" className="form-control" 
              id="password" 
              name="password" 
-             value={password} 
+             value={formData.password} 
              placeholder='Enter your password' 
              onChange={onChange}/>
             </div>

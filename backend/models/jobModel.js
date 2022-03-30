@@ -2,18 +2,13 @@ const mongoose = require("mongoose");
 
 const jobSchema = mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
-
     title: { type: String, required: [true, "Please add a job title"] },
-    country: { type: String, required: true },
+    location: { type: String, required: true },
     minSalary: { type: Number, required: true },
     maxSalary: { type: Number, required: true },
-    Description: { type: String, required: true },
+    description: { type: String, required: true },
     company: { type: String, required: true },
+    adzunaId: { type: String, required: true },
   },
   {
     timestamps: true,

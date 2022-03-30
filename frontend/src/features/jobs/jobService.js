@@ -14,7 +14,46 @@ const createJob = async (jobData, token) => {
 
   return response.data;
 };
- //Get user jobs
+
+const saveJob = async (jobData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(API_URL + 'save', { job:jobData }, config);
+
+  return response.data;
+};
+
+const searchJob = async (searchForm, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(API_URL + 'search', searchForm, config);
+
+  return response.data;
+};
+
+//GEts the User Saved Jobs.
+const savedJobs = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + 'save', config);
+
+  return response.data;
+};
+
+
+//Get user jobs
 const getJobs = async (token) => {
     const config = {
       headers: {
@@ -23,7 +62,7 @@ const getJobs = async (token) => {
     };
   
     const response = await axios.get(API_URL,config);
-  
+    console.log("GEt JOB RESPONSE:", response);
     return response.data;
   };
 
@@ -42,8 +81,11 @@ const getJobs = async (token) => {
 
 const jobService = {
   createJob,
+  saveJob,
   getJobs,
-  deleteJob
+  deleteJob,
+  searchJob,
+  savedJobs,
 };
 
 export default jobService;
