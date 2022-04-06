@@ -13,10 +13,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(__dirname, './build')));
+app.use(express.static(path.join(__dirname, '.  /build')));
 //Server frontend
 if(process.env.NODE_ENV === 'production') {
-    app.get('/*', (req, res) => {
+    app.get('*', (req, res) => {
         console.log(path.resolve(__dirname,'./build', 'index.html'));
         res.sendFile(path.resolve(__dirname,'./build', 'index.html'))
     })
