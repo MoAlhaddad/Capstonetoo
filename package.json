@@ -1,6 +1,8 @@
 {
   "name": "mern-jobsearch",
   "version": "1.0.0",
+  "proxy": "http://localhost:5000",
+  "homepage": ".",
   "description": "",
   "main": "server.js",
   "scripts": {
